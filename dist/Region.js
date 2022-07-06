@@ -50,5 +50,15 @@ class Region {
             child.process(delta, minArea, maxArea, maxVariation, minDiversity);
         }
     }
+    save(regions) {
+        if (this.stable)
+            regions.push(this);
+        for (var child = this.child; child; child = child.next) {
+            child.save(regions);
+        }
+    }
+    getRect() {
+        return this.rect;
+    }
 }
 exports.default = Region;

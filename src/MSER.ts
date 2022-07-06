@@ -73,26 +73,26 @@ export default class MSER {
   extract(imageData: ImageData): Region[] {
     let mask = [],
       accessible = [],
-      boundaryPixels = [],
+      boundaryPixels: number[][] = [],
       priority = MAX_LEVEL,
-      stack = [],
-      regions = [],
+      stack: Region[] = [],
+      regions: Region[] = [],
       data = imageData.data,
       width = imageData.width,
       height = imageData.height;
 
-    let processStack = function processStack(level: number, pixel) {
-      let top;
+    function processStack(level: number, pixel: number) {
+      let top: Region;
       while (level > stack[stack.length - 1].level) {
-        top = stack.pop();
+        top = stack.pop()!;
         if (level < stack[stack.length - 1].level) {
-          stack.push(new Region(level, pixel));
+          stack.push(new Region(level /*, pixel*/));
           stack[stack.length - 1].merge(top);
           return;
         }
         stack[stack.length - 1].merge(top);
       }
-    };
+    }
 
     let index = 0,
       i,
@@ -189,12 +189,3 @@ export default class MSER {
     }
   }
 }
-
-let _MSER = function _MSER(opts) {
-  /**
-   * Extract maximally stable extremal regions from ImageData object
-   * @param {ImageData} imageData - image ImageData object
-   */
-
-  this.extract = function extract(imageData) {};
-};

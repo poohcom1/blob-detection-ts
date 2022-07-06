@@ -6,12 +6,12 @@ export default class Region {
   private next: Region | undefined;
 
   constructor(
-    private level: number,
-    private moments = [0, 0, 0, 0, 0],
-    private area = 0,
-    private variation = Infinity,
-    private stable = false,
-    private rect = new Rect()
+    public level: number,
+    public moments = [0, 0, 0, 0, 0],
+    public area = 0,
+    public variation = Infinity,
+    public stable = false,
+    public rect = new Rect()
   ) {}
 
   accumulate(x: number, y: number): void {
@@ -53,9 +53,9 @@ export default class Region {
       this.area <= maxArea &&
       this.variation <= maxVariation;
     for (
-      parent = this.parent;
+      parent = this.parent!;
       parent && this.area > minDiversity * parent.area;
-      parent = parent.parent
+      parent = parent.parent!
     ) {
       if (parent.variation <= this.variation) this.stable = false;
       if (this.variation < parent.variation) parent.stable = false;
@@ -63,5 +63,16 @@ export default class Region {
     for (var child = this.child; child; child = child.next) {
       child.process(delta, minArea, maxArea, maxVariation, minDiversity);
     }
+  }
+
+  save(regions: Region[]): void {
+    if (this.stable) regions.push(this);
+    for (var child = this.child; child; child = child.next) {
+      child.save(regions);
+    }
+  }
+
+  getRect(): Rect {
+    return this.rect;
   }
 }

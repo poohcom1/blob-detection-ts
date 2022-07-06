@@ -13,6 +13,12 @@ class Rect {
             this.height = height;
         }
     }
+    get x() {
+        return this.left;
+    }
+    get y() {
+        return this.top;
+    }
     set width(val) {
         this.right = this.left + val;
     }

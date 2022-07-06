@@ -5,6 +5,8 @@ export default class Rect {
     right: number;
     constructor();
     constructor(left: number, right: number, width: number, height: number);
+    get x(): number;
+    get y(): number;
     set width(val: number);
     get width(): number;
     set height(val: number);

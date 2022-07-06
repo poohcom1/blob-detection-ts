@@ -20,6 +20,14 @@ export default class Rect {
     }
   }
 
+  get x(): number {
+    return this.left;
+  }
+
+  get y(): number {
+    return this.top;
+  }
+
   set width(val: number) {
     this.right = this.left + val;
   }
