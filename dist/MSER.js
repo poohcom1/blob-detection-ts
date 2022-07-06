@@ -109,7 +109,7 @@ class MSER {
             stack[stack.length - 1].accumulate(x, y);
             if (priority === MAX_LEVEL) {
                 processStack(MAX_LEVEL, curPixel);
-                stack[stack.length - 1].process(this.options.delta, this.options.minArea * width * height, this.options.maxArea * width * height, this.options.maxletiation, this.options.minDiversity);
+                stack[stack.length - 1].process(this.options.delta, this.options.minArea * width * height, this.options.maxArea * width * height, this.options.maxVariation, this.options.minDiversity);
                 stack[stack.length - 1].save(regions);
                 return regions;
             }

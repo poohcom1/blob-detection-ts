@@ -4,7 +4,7 @@ interface MSEROptions {
     delta: number;
     minArea: number;
     maxArea: number;
-    maxletiation: number;
+    maxVariation: number;
     minDiversity: number;
 }
 export default class MSER {

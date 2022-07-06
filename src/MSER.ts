@@ -5,7 +5,7 @@ interface MSEROptions {
   delta: number;
   minArea: number;
   maxArea: number;
-  maxletiation: number;
+  maxVariation: number;
   minDiversity: number;
 }
 
@@ -166,7 +166,7 @@ export default class MSER {
           this.options.delta,
           this.options.minArea * width * height,
           this.options.maxArea * width * height,
-          this.options.maxletiation,
+          this.options.maxVariation,
           this.options.minDiversity
         );
         stack[stack.length - 1].save(regions);
