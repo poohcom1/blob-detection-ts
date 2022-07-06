@@ -1,6 +1,6 @@
 import Rect from "./Rect";
 import Region from "./Region";
-interface MSEROptions {
+export interface MSEROptions {
     delta: number;
     minArea: number;
     maxArea: number;
@@ -16,4 +16,3 @@ export default class MSER {
     drawRectOutline(rect: Rect, rgba: RGBA, imgData: ImageData): void;
     extract(imageData: ImageData): Region[];
 }
-export {};
