@@ -1,7 +1,7 @@
 import Rect from "./Rect";
 import Region from "./Region";
 
-interface MSEROptions {
+export interface MSEROptions {
   delta: number;
   minArea: number;
   maxArea: number;
