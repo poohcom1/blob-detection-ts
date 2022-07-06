@@ -1,0 +1,24 @@
+{
+  "name": "blob-detection-ts",
+  "version": "0.0.1",
+  "description": "A typescript fork of stonkpunk/blob-detection-mser",
+  "repository": {
+    "url": "git+https://github.com/poohcom1/blob-detection-ts"
+  },
+  "homepage": "https://github.com/poohcom1/blob-detection-ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "blob",
+    "detection",
+    "typescript"
+  ],
+  "author": "poohcom1",
+  "license": "ISC"
+}
