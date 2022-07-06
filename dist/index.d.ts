@@ -1,4 +1,5 @@
 export { default as Rect } from "./Rect";
 export { default as Region } from "./Region";
-import MSER from "./MSER";
+import MSER, { MSEROptions } from "./MSER";
+export { MSEROptions };
 export default MSER;
