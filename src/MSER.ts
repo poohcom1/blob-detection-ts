@@ -10,11 +10,18 @@ export interface MSEROptions {
 }
 
 const MAX_LEVEL = 256;
+const DEFAULT_OPTIONS = {
+  delta: 2,
+  minArea: 0.0005,
+  maxArea: 0.1,
+  maxVariation: 0.5,
+  minDiversity: 0.5,
+};
 
 export default class MSER {
   eight = true;
 
-  constructor(private options: MSEROptions = options) {}
+  constructor(private options: MSEROptions = DEFAULT_OPTIONS) {}
 
   mergeRects(rects: Rect[]): Rect[] {
     // merge overlapping regions

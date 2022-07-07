@@ -6,8 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Rect_1 = __importDefault(require("./Rect"));
 const Region_1 = __importDefault(require("./Region"));
 const MAX_LEVEL = 256;
+const DEFAULT_OPTIONS = {
+    delta: 2,
+    minArea: 0.0005,
+    maxArea: 0.1,
+    maxVariation: 0.5,
+    minDiversity: 0.5,
+};
 class MSER {
-    constructor(options = options) {
+    constructor(options = DEFAULT_OPTIONS) {
         this.options = options;
         this.eight = true;
     }
