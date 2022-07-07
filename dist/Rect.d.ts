@@ -4,7 +4,8 @@ export default class Rect {
     left: number;
     right: number;
     constructor();
-    constructor(left: number, right: number, width: number, height: number);
+    constructor(left: number, top: number, width: number, height: number);
+    isEmpty(): boolean;
     get x(): number;
     get y(): number;
     set width(val: number);
@@ -14,6 +15,6 @@ export default class Rect {
     get ratio(): number;
     get size(): number;
     add(x: number, y: number): void;
-    intersect(rect: Rect): Rect;
+    intersect(rect: Rect): Rect | undefined;
     merge(rect: Rect, strict?: boolean): void;
 }

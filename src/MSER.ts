@@ -18,7 +18,7 @@ export default class MSER {
 
   mergeRects(rects: Rect[]): Rect[] {
     // merge overlapping regions
-    let intersection = new Rect();
+    let intersection;
     for (let i = rects.length - 1; i >= 0; i--) {
       for (let j = i - 1; j >= 0; j--) {
         intersection = rects[j].intersect(rects[i]);
@@ -70,6 +70,10 @@ export default class MSER {
     );
   }
 
+  /**
+   * Extract maximally stable extremal regions from ImageData object
+   * @param {ImageData} imageData - image ImageData object
+   */
   extract(imageData: ImageData): Region[] {
     let mask = [],
       accessible = [],
@@ -81,12 +85,12 @@ export default class MSER {
       width = imageData.width,
       height = imageData.height;
 
-    function processStack(level: number, pixel: number) {
+    function processStack(level: number) {
       let top: Region;
       while (level > stack[stack.length - 1].level) {
         top = stack.pop()!;
         if (level < stack[stack.length - 1].level) {
-          stack.push(new Region(level /*, pixel*/));
+          stack.push(new Region(level));
           stack[stack.length - 1].merge(top);
           return;
         }
@@ -110,6 +114,7 @@ export default class MSER {
     let curPixel = 0,
       curEdge = 0,
       curLevel = mask[0];
+
     accessible[0] = true;
     stack.push(new Region(curLevel));
 
@@ -161,7 +166,7 @@ export default class MSER {
       stack[stack.length - 1].accumulate(x, y);
 
       if (priority === MAX_LEVEL) {
-        processStack(MAX_LEVEL, curPixel);
+        processStack(MAX_LEVEL);
         stack[stack.length - 1].process(
           this.options.delta,
           this.options.minArea * width * height,
@@ -183,7 +188,7 @@ export default class MSER {
 
       newLevel = mask[curPixel];
       if (newLevel !== curLevel) {
-        processStack(newLevel, curPixel);
+        processStack(newLevel);
         curLevel = newLevel;
       }
     }

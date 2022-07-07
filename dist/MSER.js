@@ -1,7 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Rect_1 = require("./Rect");
-const Region_1 = require("./Region");
+const Rect_1 = __importDefault(require("./Rect"));
+const Region_1 = __importDefault(require("./Region"));
 const MAX_LEVEL = 256;
 class MSER {
     constructor(options = options) {
@@ -10,7 +13,7 @@ class MSER {
     }
     mergeRects(rects) {
         // merge overlapping regions
-        let intersection = new Rect_1.default();
+        let intersection;
         for (let i = rects.length - 1; i >= 0; i--) {
             for (let j = i - 1; j >= 0; j--) {
                 intersection = rects[j].intersect(rects[i]);
@@ -41,14 +44,18 @@ class MSER {
         this.drawRectSolid(new Rect_1.default(rect.left, rect.top, 1, rect.height), rgba, imgData);
         this.drawRectSolid(new Rect_1.default(rect.left + rect.width - 1, rect.top, 1, rect.height), rgba, imgData);
     }
+    /**
+     * Extract maximally stable extremal regions from ImageData object
+     * @param {ImageData} imageData - image ImageData object
+     */
     extract(imageData) {
         let mask = [], accessible = [], boundaryPixels = [], priority = MAX_LEVEL, stack = [], regions = [], data = imageData.data, width = imageData.width, height = imageData.height;
-        function processStack(level, pixel) {
+        function processStack(level) {
             let top;
             while (level > stack[stack.length - 1].level) {
                 top = stack.pop();
                 if (level < stack[stack.length - 1].level) {
-                    stack.push(new Region_1.default(level /*, pixel*/));
+                    stack.push(new Region_1.default(level));
                     stack[stack.length - 1].merge(top);
                     return;
                 }
@@ -108,7 +115,7 @@ class MSER {
             }
             stack[stack.length - 1].accumulate(x, y);
             if (priority === MAX_LEVEL) {
-                processStack(MAX_LEVEL, curPixel);
+                processStack(MAX_LEVEL);
                 stack[stack.length - 1].process(this.options.delta, this.options.minArea * width * height, this.options.maxArea * width * height, this.options.maxVariation, this.options.minDiversity);
                 stack[stack.length - 1].save(regions);
                 return regions;
@@ -122,7 +129,7 @@ class MSER {
                 ++priority;
             newLevel = mask[curPixel];
             if (newLevel !== curLevel) {
-                processStack(newLevel, curPixel);
+                processStack(newLevel);
                 curLevel = newLevel;
             }
         }

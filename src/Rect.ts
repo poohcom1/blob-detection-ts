@@ -5,19 +5,33 @@ export default class Rect {
   public right: number = 0;
 
   constructor();
-  constructor(left: number, right: number, width: number, height: number);
+  constructor(left: number, top: number, width: number, height: number);
   constructor(
     left?: number | undefined,
     top?: number | undefined,
     width?: number | undefined,
     height?: number | undefined
   ) {
-    if (left && top && width && height) {
+    if (
+      left !== undefined &&
+      top !== undefined &&
+      width !== undefined &&
+      height !== undefined
+    ) {
       this.left = left;
       this.top = top;
       this.width = width;
       this.height = height;
     }
+  }
+
+  isEmpty() {
+    return (
+      this.top === Infinity &&
+      this.left === Infinity &&
+      this.bottom === 0 &&
+      this.right === 0
+    );
   }
 
   get x(): number {
@@ -52,15 +66,15 @@ export default class Rect {
     return this.width * this.height;
   }
 
-  add(x: number, y: number): void {
+  public add(x: number, y: number): void {
     this.top = Math.min(this.top, y);
     this.bottom = Math.max(this.bottom, y + 1);
     this.left = Math.min(this.left, x);
     this.right = Math.max(this.right, x + 1);
   }
 
-  intersect(rect: Rect) {
-    const intersection = new Rect();
+  public intersect(rect: Rect): Rect | undefined {
+    let intersection = undefined;
     let isIntersecting = !(
       rect.left > this.right ||
       rect.right < this.left ||
@@ -68,6 +82,7 @@ export default class Rect {
       rect.bottom < this.top
     );
     if (isIntersecting) {
+      intersection = new Rect();
       intersection.left = Math.max(this.left, rect.left);
       intersection.top = Math.max(this.top, rect.top);
       intersection.right = Math.min(this.right, rect.right);
@@ -76,7 +91,7 @@ export default class Rect {
     return intersection;
   }
 
-  merge(rect: Rect, strict: boolean = false): void {
+  public merge(rect: Rect, strict: boolean = false): void {
     if (strict) {
       var intersection = this.intersect(rect);
       if (!intersection || intersection.size < this.size / 4) return;

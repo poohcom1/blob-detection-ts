@@ -42,7 +42,7 @@ export default class Region {
     minArea: number,
     maxArea: number,
     maxVariation: number,
-    minDiversity: number
+    minDiversity?: number
   ) {
     let parent: Region = this;
     while (parent.parent && parent.parent.level <= this.level + delta)
@@ -52,16 +52,17 @@ export default class Region {
       this.area >= minArea &&
       this.area <= maxArea &&
       this.variation <= maxVariation;
+
     for (
       parent = this.parent!;
-      parent && this.area > minDiversity * parent.area;
+      parent && minDiversity && this.area > minDiversity * parent.area;
       parent = parent.parent!
     ) {
       if (parent.variation <= this.variation) this.stable = false;
       if (this.variation < parent.variation) parent.stable = false;
     }
     for (var child = this.child; child; child = child.next) {
-      child.process(delta, minArea, maxArea, maxVariation, minDiversity);
+      child.process(delta, minArea, maxArea, maxVariation);
     }
   }
 

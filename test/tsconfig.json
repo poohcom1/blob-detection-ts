@@ -4,9 +4,7 @@
     "target": "es2015",
     "declaration": true,
     "outDir": "./dist",
-    "strict": true,
-    "allowJs": true,
-    "esModuleInterop": true
+    "strict": true
   },
-  "include": ["src/**/*"]
+  "include": ["./**/*"]
 }

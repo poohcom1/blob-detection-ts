@@ -1,6 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const Rect_1 = require("./Rect");
+const Rect_1 = __importDefault(require("./Rect"));
 class Region {
     constructor(level, moments = [0, 0, 0, 0, 0], area = 0, variation = Infinity, stable = false, rect = new Rect_1.default()) {
         this.level = level;
@@ -40,14 +43,14 @@ class Region {
             this.area >= minArea &&
                 this.area <= maxArea &&
                 this.variation <= maxVariation;
-        for (parent = this.parent; parent && this.area > minDiversity * parent.area; parent = parent.parent) {
+        for (parent = this.parent; parent && minDiversity && this.area > minDiversity * parent.area; parent = parent.parent) {
             if (parent.variation <= this.variation)
                 this.stable = false;
             if (this.variation < parent.variation)
                 parent.stable = false;
         }
         for (var child = this.child; child; child = child.next) {
-            child.process(delta, minArea, maxArea, maxVariation, minDiversity);
+            child.process(delta, minArea, maxArea, maxVariation);
         }
     }
     save(regions) {

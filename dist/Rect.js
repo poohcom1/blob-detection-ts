@@ -6,12 +6,21 @@ class Rect {
         this.bottom = 0;
         this.left = Infinity;
         this.right = 0;
-        if (left && top && width && height) {
+        if (left !== undefined &&
+            top !== undefined &&
+            width !== undefined &&
+            height !== undefined) {
             this.left = left;
             this.top = top;
             this.width = width;
             this.height = height;
         }
+    }
+    isEmpty() {
+        return (this.top === Infinity &&
+            this.left === Infinity &&
+            this.bottom === 0 &&
+            this.right === 0);
     }
     get x() {
         return this.left;
@@ -44,12 +53,13 @@ class Rect {
         this.right = Math.max(this.right, x + 1);
     }
     intersect(rect) {
-        const intersection = new Rect();
+        let intersection = undefined;
         let isIntersecting = !(rect.left > this.right ||
             rect.right < this.left ||
             rect.top > this.bottom ||
             rect.bottom < this.top);
         if (isIntersecting) {
+            intersection = new Rect();
             intersection.left = Math.max(this.left, rect.left);
             intersection.top = Math.max(this.top, rect.top);
             intersection.right = Math.min(this.right, rect.right);

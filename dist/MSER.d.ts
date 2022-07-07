@@ -14,5 +14,9 @@ export default class MSER {
     mergeRects(rects: Rect[]): Rect[];
     drawRectSolid(rect: Rect, rgba: RGBA, imgData: ImageData): void;
     drawRectOutline(rect: Rect, rgba: RGBA, imgData: ImageData): void;
+    /**
+     * Extract maximally stable extremal regions from ImageData object
+     * @param {ImageData} imageData - image ImageData object
+     */
     extract(imageData: ImageData): Region[];
 }
